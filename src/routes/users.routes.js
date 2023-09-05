@@ -1,9 +1,10 @@
 const { Router } = require("express");
 const usersRoutes = Router();
 
-usersRoutes.get("/", (request, response) => {
-  return response.json("Create Users Routes")
-})
+const UsersController = require("../controller/usersController");
 
+const usersController = new UsersController();
 
-module.exports = usersRoutes
+usersRoutes.get("/", usersController.create);
+
+module.exports = usersRoutes;
