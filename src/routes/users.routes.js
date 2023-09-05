@@ -5,6 +5,6 @@ const UsersController = require("../controller/usersController");
 
 const usersController = new UsersController();
 
-usersRoutes.get("/", usersController.create);
+usersRoutes.post("/", usersController.create);
 
 module.exports = usersRoutes;
