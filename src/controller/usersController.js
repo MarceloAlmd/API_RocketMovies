@@ -1,13 +1,27 @@
 const AppError = require("../utils/appError");
-
+const knex = require("../database/knex");
+const { hash } = require("bcryptjs");
 class UsersController {
-  create(request, response) {
+  async create(request, response) {
     const { name, email, password } = request.body;
 
-    if (!name) {
-      throw new AppError("name is mandatory");
+    const checkEmail = await knex("users").where({ email }).first();
+
+    if (checkEmail) {
+      throw new AppError("Email already Exists");
     }
-    return response.json("Create Users Routes");
+
+    const hashedPassword = await hash(password, 8);
+
+    await knex("users").insert({
+      name,
+      email,
+      password: hashedPassword,
+    });
+
+    return response.status(201).json({
+      message: "User Created",
+    });
   }
 }
 
