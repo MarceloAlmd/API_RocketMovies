@@ -33,13 +33,15 @@ class UsersController {
       throw new AppError("User not found");
     }
 
-    const checkEmail = await knex("users").where({ email }).first();
-    if (checkEmail && checkEmail.id !== user.id) {
-      throw new AppError("Email already exists");
+    if (email) {
+      const checkEmail = await knex("users").where({ email }).first();
+      if (checkEmail && checkEmail.id !== user.id) {
+        throw new AppError("Email already exists");
+      }
     }
 
-    user.name = name;
-    user.email = email;
+    user.name = name ?? user.name;
+    user.email = email ?? user.email;
 
     if (current_password && !new_password) {
       throw new AppError("info the new password");
@@ -67,11 +69,8 @@ class UsersController {
       updated_at: knex.fn.now(),
     });
 
-    return response.json({
-      message: "user updated",
-    });
+    return response.json(user);
   }
-
   async delete(request, response) {
     const user_id = request.user.id;
 
