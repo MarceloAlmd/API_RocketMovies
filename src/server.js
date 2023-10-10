@@ -2,10 +2,12 @@ require("express-async-errors");
 
 const express = require("express");
 const uploadsConfig = require("./configs/uploads");
+const cors = require("cors");
 const routes = require("./routes");
 const serverError = require("./utils/serverError");
 const sqliteConnection = require("./database/sqlite");
 const app = express();
+app.use(cors());
 sqliteConnection();
 app.use(express.json());
 app.use("/files", express.static(uploadsConfig.UPLOADS_FOLDER));
