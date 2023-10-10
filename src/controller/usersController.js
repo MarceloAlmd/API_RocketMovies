@@ -36,7 +36,7 @@ class UsersController {
     if (email) {
       const checkEmail = await knex("users").where({ email }).first();
       if (checkEmail && checkEmail.id !== user.id) {
-        throw new AppError("Email already exists");
+        throw new AppError("Email already Exists");
       }
     }
 
