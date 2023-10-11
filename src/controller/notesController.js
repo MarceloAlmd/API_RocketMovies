@@ -23,7 +23,7 @@ class NotesController {
     await knex("tags").insert(tagsInsert);
 
     return response.json({
-      message: "note created",
+      message: "note for movie created",
     });
   }
 
