@@ -1,4 +1,4 @@
-const path = require("node:path");
+const path = require("path");
 const sqlite = require("sqlite");
 const sqlite3 = require("sqlite3");
 
